@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-           id="cordova-plugin-file"
+           id="com.peerio.cordova.plugin.file"
       version="4.1.2-dev">
     <name>File</name>
     <description>Cordova File Plugin</description>
@@ -131,7 +131,6 @@ to config.xml in order for the application to find previously stored files.
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
 
         <source-file src="src/android/EncodingException.java" target-dir="src/org/apache/cordova/file" />
@@ -171,7 +170,6 @@ to config.xml in order for the application to find previously stored files.
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
 
         <source-file src="src/android/EncodingException.java" target-dir="src/org/apache/cordova/file" />
