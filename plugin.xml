@@ -151,6 +151,9 @@ to config.xml in order for the application to find previously stored files.
         <js-module src="www/android/FileSystem.js" name="androidFileSystem">
             <merges target="FileSystem" />
         </js-module>
+        <js-module src="www/android/FileEncryption.js" name="androidFileEncryption">
+            <clobbers target="FileEncryption" />
+        </js-module>
         <js-module src="www/fileSystems-roots.js" name="fileSystems-roots">
             <runs/>
         </js-module>
@@ -232,6 +235,10 @@ to config.xml in order for the application to find previously stored files.
         <!-- ios specific file apis -->
         <js-module src="www/ios/FileSystem.js" name="iosFileSystem">
             <merges target="FileSystem" />
+        </js-module>
+
+        <js-module src="www/ios/FileEncryption.js" name="iosFileEncryption">
+            <clobbers target="FileEncryption" />
         </js-module>
 
         <js-module src="www/fileSystems-roots.js" name="fileSystems-roots">

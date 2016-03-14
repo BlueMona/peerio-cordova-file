@@ -19,12 +19,18 @@
  *
 */
 
-FILESYSTEM_PROTOCOL = "cdvfile";
+var exec = require('cordova/exec');
 
 module.exports = {
-    __format__: function(fullPath) {
-        var path = ('/'+this.name+(fullPath[0]==='/'?'':'/')+FileSystem.encodeURIPath(fullPath)).replace('//','/');
-        return FILESYSTEM_PROTOCOL + '://localhost' + path;
+    /**
+     * -1 = not supported
+     * 0 = supported, inactive
+     * 1 = supported, default key
+     * 2 = supported, custom passcode
+     */
+    getEncryptionStatus: function() {
+        // ios forces user to have a passcord set
+        exec(success, fail, "File", "getEncryptionStatus", []);
     }
 };
 
