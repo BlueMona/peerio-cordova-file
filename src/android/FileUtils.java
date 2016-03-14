@@ -48,6 +48,7 @@ import java.security.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import android.app.admin.DevicePolicyManager;
 
 /**
  * This class provides file and directory services to JavaScript.
@@ -96,6 +97,19 @@ public class FileUtils extends CordovaPlugin {
 
     private interface FileOp {
         void run(JSONArray args) throws Exception;
+    }
+
+    public int getEncryptionStatus() {
+        int status = DevicePolicyManager.ENCRYPTION_STATUS_UNSUPPORTED;
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            final DevicePolicyManager dpm = (DevicePolicyManager) cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+            if (dpm != null) {
+                status = dpm.getStorageEncryptionStatus();
+            }
+        }
+
+        return status;
     }
 
     private ArrayList<Filesystem> filesystems;
@@ -284,6 +298,14 @@ public class FileUtils extends CordovaPlugin {
                 }
             }, rawArgs, callbackContext);
         }
+        else if (action.equals("getEncryptionStatus")) {
+            threadhelper( new FileOp( ){
+                public void run(JSONArray args) {
+                    long l = filePlugin.getEncryptionStatus();
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, l));
+                }
+            }, rawArgs, callbackContext);
+        }
         else if (action.equals("testFileExists")) {
             threadhelper( new FileOp( ){
                 public void run(JSONArray args) throws JSONException {
@@ -376,7 +398,7 @@ public class FileUtils extends CordovaPlugin {
             }, rawArgs, callbackContext);
         }
         else if (action.equals("requestAllFileSystems")) {
-            threadhelper( new FileOp( ){
+            threadhelper(new FileOp() {
                 public void run(JSONArray args) throws IOException, JSONException {
                     callbackContext.success(requestAllFileSystems());
                 }
@@ -385,12 +407,12 @@ public class FileUtils extends CordovaPlugin {
             cordova.getThreadPool().execute(
                     new Runnable() {
                         public void run() {
-                        	try {
-					callbackContext.success(requestAllPaths());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                            try {
+                                callbackContext.success(requestAllPaths());
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
                     }
             );
@@ -1132,3 +1154,4 @@ public class FileUtils extends CordovaPlugin {
 
     }
 }
+
