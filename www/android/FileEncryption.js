@@ -30,7 +30,9 @@ module.exports = {
      */
     getEncryptionStatus: function() {
         // ios forces user to have a passcord set
-        exec(success, fail, "File", "getEncryptionStatus", []);
+        return new Promise( function(success, fail) {
+            exec(success, fail, "File", "getEncryptionStatus", []);
+        });
     }
 };
 
