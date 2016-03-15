@@ -115,6 +115,7 @@ public class FileUtils extends CordovaPlugin {
                     case DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE:
                         status = 0;
                         break;
+				}
             }
         }
 
