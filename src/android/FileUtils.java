@@ -105,7 +105,16 @@ public class FileUtils extends CordovaPlugin {
         if (Build.VERSION.SDK_INT >= 11) {
             final DevicePolicyManager dpm = (DevicePolicyManager) cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
             if (dpm != null) {
-                status = dpm.getStorageEncryptionStatus();
+                switch(dpm.getStorageEncryptionStatus()) {
+                    case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
+                        status = 2;
+                        break;
+                    case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_DEFAULT_KEY:
+                        status = 1;
+                        break;
+                    case DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE:
+                        status = 0;
+                        break;
             }
         }
 
